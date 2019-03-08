@@ -1,9 +1,9 @@
 # EG
 
-#__________________________________
+__________________________________
 
 
-#Theoretical part
+Theoretical part
 
  
 
@@ -11,7 +11,7 @@ Get as much knowledge as possible about modern state of Hadoop ecosystem during 
 
  
 
-#Practical part
+Practical part
 
  
 
@@ -23,7 +23,7 @@ Create MR job (no restrictions on language/tooling) to transform CSV file with 3
 
  
 
-#Outcomes
+Outcomes
 
  
 
