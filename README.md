@@ -38,5 +38,3 @@ __________________________________
  
 
 Deadline for submitting practical part: 21.03.2019. In case you have any questions feel free to contact XXXXXX
-
-Putting you in the contact with my colleague Natalya as well.
