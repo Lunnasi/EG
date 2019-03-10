@@ -5,7 +5,8 @@
 
   tasks:
   - name: apt upgrade
-    apt: 
+    apt:
+      name: aptitude 
       upgrade: yes
       update_cache: yes
 
