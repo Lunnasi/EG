@@ -1,0 +1,6 @@
+ssh-keygen -t rsa -C "sergey.shake@gmail.com"
+
+cd /vagrant/
+cp /home/vagrant/.ssh/id_rsa.pub .
+
+
