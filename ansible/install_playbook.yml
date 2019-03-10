@@ -1,0 +1,19 @@
+---
+- name: install httpd
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: apt upgrade
+    apt: 
+      upgrade: yes
+      update_cache: yes
+
+  - name: install Apache
+    apt: name={item}} state=installed
+    with_items:
+      - pip
+      - apache2
+  
+  - name: Start Apache
+    service: name=httpd state=started enabled=yes
