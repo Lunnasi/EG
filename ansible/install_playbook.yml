@@ -1,20 +1,27 @@
 ---
 - name: install httpd
-  hosts: all
+  hosts: hadoop 
   become: yes
 
   tasks:
   - name: apt upgrade
     apt:
-      name: aptitude 
-      upgrade: yes
+      upgrade: dist
       update_cache: yes
+      cache_valid_time: 86400
 
   - name: install Apache
-    apt: name={item}} state=installed
+    apt: name={{item}} state=installed
     with_items:
-      - pip
-      - apache2
+      - 'python-pip'
+      - 'apache2'
   
   - name: Start Apache
-    service: name=httpd state=started enabled=yes
+    service: name=apache2 state=started enabled=yes
+
+  - shell: uptime
+    register: results
+
+  - debug:
+      var: results.stdout
+

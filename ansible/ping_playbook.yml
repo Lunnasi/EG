@@ -1,6 +1,6 @@
 ---
 - name: Test Connection
-  hosts: all
+  hosts: hadoop
   become: yes
 
   tasks:
