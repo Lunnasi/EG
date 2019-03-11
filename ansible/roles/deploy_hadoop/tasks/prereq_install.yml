@@ -1,0 +1,36 @@
+---
+- name: Install Pre Req
+  apt: name={{item}} state=installed
+  with_items:
+    - 'wget'
+    - 'tar'
+    - 'gzip'
+    - 'unzip'
+    - 'default-jdk'
+
+- shell: java -version
+  register: result
+
+  vars: 
+    - dest_path=/etc/hadoop
+    - file_name=hadoop-3.1.2.tar.gz
+
+- set_fact: full_name="{{dest_path}}/{{file_name}}"
+
+- file:
+    path: {{dest_path }}
+    state: directory
+    mode: 0755
+
+- name: Download hadoop-3.1.2.
+  become: yes
+  get_url:
+    url: https://www-us.apache.org/dist/hadoop/common/hadoop-3.1.2/{{file_name}}
+    dest: {{dest_path}}
+  register: result
+  until: result is success
+
+- name: Unzip
+  unarchive:
+    src: "{{full_name}}.tar.gz"
+    dest: {{full_name}}
