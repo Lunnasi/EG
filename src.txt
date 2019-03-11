@@ -4,3 +4,8 @@ cd /vagrant/
 cp /home/vagrant/.ssh/id_rsa.pub .
 
 
+readlink -f /usr/bin/java | sed "s:bin/java::"
+
+lineinfile: dest="{{ hadoop_home }}/etc/hadoop/hadoop-env.sh" regexp=JAVA_HOME= line="export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64"
+
+/usr/local/hadoop/bin/hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.3.jar grep ~/input ~/grep_example 'principal[.]*'

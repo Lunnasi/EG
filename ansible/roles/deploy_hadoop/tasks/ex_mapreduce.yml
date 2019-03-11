@@ -6,13 +6,12 @@
 
 - set_fact: f_path="/etc/hadoop/hadoop-3.1.2/etc/hadoop/"
  
--name: find files
- find: 
+- name: find files
+  find: 
    path: "{{f_path}}" 
    recurse: yes 
    patterns: "*xml"
- register: file_to_copy
-
+  register: file_to_copy
 
 - name: set fact
   set_fact:
