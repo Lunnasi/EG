@@ -1,0 +1,33 @@
+- name: Create dir
+  file:
+    path: ~/input
+    state: directory
+    mode: 0755
+
+- set_fact: f_path="/etc/hadoop/hadoop-3.1.2/etc/hadoop/"
+ 
+-name: find files
+ find: 
+   path: "{{f_path}}" 
+   recurse: yes 
+   patterns: "*xml"
+ register: file_to_copy
+
+
+- name: set fact
+  set_fact:
+    all_files:
+      - "{{ file_to_copy.files | map(attribute='path') | list }}"
+  when: file_to_copy > 0
+
+- name: copy files
+  copy:
+    src: "{{ item }}"
+    dest: ~/input
+  with_items: "{{ all_files }}"
+  when: file_to_copy > 0
+
+- name: Starting MR
+  shell: /etc/hadoop/hadoop-3.1.2/bin/hadoop jar /etc/hadoop/hadoop-3.1.2/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.3.jar grep ~/input ~/grep_example 'principal[.]*'
+
+

@@ -1,5 +1,5 @@
 ---
-- name: Install Pre Req
+- name: Step 1 — Installing Prerequisites
   apt: name={{item}} state=installed
   with_items:
     - 'wget'
@@ -9,28 +9,43 @@
     - 'default-jdk'
 
 - shell: java -version
-  register: result
 
-  vars: 
-    - dest_path=/etc/hadoop
-    - file_name=hadoop-3.1.2.tar.gz
-
-- set_fact: full_name="{{dest_path}}/{{file_name}}"
+- set_fact: work_dir="/etc/hadoop"
+- set_fact: file_name=hadoop-3.1.2
+- set_fact: full_name="{{work_dir}}/{{file_name}}"
+- stat: path="{{full_name}}.tar.gz"
+  register: hadoop_tar
 
 - file:
-    path: {{dest_path }}
+    path: "{{ work_dir }}"
     state: directory
     mode: 0755
 
-- name: Download hadoop-3.1.2.
+- name: Step 2 — Installing Hadoop
   become: yes
   get_url:
-    url: https://www-us.apache.org/dist/hadoop/common/hadoop-3.1.2/{{file_name}}
-    dest: {{dest_path}}
+    url: https://www-us.apache.org/dist/hadoop/common/hadoop-3.1.2/{{file_name}}.tar.gz
+    dest: "{{ work_dir }}"
   register: result
   until: result is success
+  when: not hadoop_tar.stat.exists
 
 - name: Unzip
-  unarchive:
+  unarchive: 
     src: "{{full_name}}.tar.gz"
-    dest: {{full_name}}
+    dest: "{{work_dir}}" 
+    creates: "{{full_name}}"
+    copy: no
+    owner: vagrant
+    group: vagrant
+    mode: 0755
+
+- name: Step 3 — Configuring Hadoop's Java Home
+  lineinfile: 
+    path: "{{ full_name }}/etc/hadoop/hadoop-env.sh"
+    state: present
+    regexp: JAVA_HOME= 
+    line: "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64"
+
+- name: Step 4 — Running Hadoop
+  shell: "{{ full_name  }}/bin/hadoop version"

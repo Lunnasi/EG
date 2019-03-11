@@ -10,11 +10,12 @@
   register: hadoop
 
 - include_tasks: prereq_install.yml
-  when: not hadoop.stat.exists
+#  when: not hadoop.stat.exists
+
+- include_tasks: ex_mapreduce.yml
 
 - shell: uptime
   register: results
 
 - debug:
     var: results.stdout
-
