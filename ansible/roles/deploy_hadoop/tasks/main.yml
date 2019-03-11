@@ -6,17 +6,15 @@
     update_cache: yes
     cache_valid_time: 86400
 
-- name: install Apache
-  apt: name={{item}} state=installed
-  with_items:
-    - 'python-pip'
-    - 'apache2'
-  
-- name: Start Apache
-  service: name=apache2 state=started enabled=yes
+- stat: path=/etc/hadoop
+  register: hadoop
+
+- include_tasks: prereq_install.yml
+  when: not hadoop.stat.exists
 
 - shell: uptime
   register: results
 
 - debug:
     var: results.stdout
+
