@@ -49,3 +49,4 @@
 
 - name: Step 4 — Running Hadoop
   shell: "{{ full_name  }}/bin/hadoop version"
+

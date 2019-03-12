@@ -35,6 +35,4 @@
   when: file_to_copy > 0
 
 - name: Starting MR
-  shell: /etc/hadoop/hadoop-3.1.2/bin/hadoop jar /etc/hadoop/hadoop-3.1.2/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.3.jar grep ~/input ~/grep_example 'principal[.]*'
-
-
+  shell: /home/vagrant/hadoop-3.1.2/bin/hadoop jar /home/vagrant/hadoop-3.1.2/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.3.jar grep ~/input ~/grep_example 'principal[.]*'
