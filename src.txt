@@ -15,12 +15,16 @@ nn2  -  192.168.56.13
 HDFS - Data node
 YARN - Node manager
 
+host_file:
+192.168.56.11 hadoop hadoop.cluster2.com
+192.168.56.12 dn1 dn1.cluster2.com
+192.168.56.13 dn2 dn2.cluster2.com
+192.168.56.105 eghome eg.cluster2.com
 
 
 
 
-
-ssh-keygen -t rsa -C "sergey.shake@gmail.com"
+ssh-keygen -t rsa -C "example@gmail.com"
 
 cd /vagrant/
 cp /home/vagrant/.ssh/id_rsa.pub .
@@ -31,3 +35,7 @@ readlink -f /usr/bin/java | sed "s:bin/java::"
 lineinfile: dest="{{ hadoop_home }}/etc/hadoop/hadoop-env.sh" regexp=JAVA_HOME= line="export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64"
 
 /usr/local/hadoop/bin/hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.3.jar grep ~/input ~/grep_example 'principal[.]*'
+ls -s hadoop-3.1.2 hadoop
+
+ls -l core-site.xml hdfs-site.xml mapred-site.xml yarn-site.xml
+hdf dfs -ls
