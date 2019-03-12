@@ -2,6 +2,14 @@ git clone https://github.com/Lunnasi/EG.git --branch EG/home_work
 
 Multi-node cluster install
 
+1. Download and intall JAva and Hadoop on all the systems
+2. Specify the IP address of each system followed by their host names in host file of each system
+3. COnfigure hadoop configuration files (core-site,hdfs-site,mapred-site,yasrn-site)
+4. Edit slaves file on master node
+5. Format namenode and start all hadoop services
+6. Check live nodes on Hadoop namenode UI
+   hdfs dfsadmin report 
+
 Deploy server:
 EGHome  -  192.168.56.105
 

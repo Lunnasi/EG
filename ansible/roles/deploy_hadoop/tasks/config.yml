@@ -1,0 +1,12 @@
+---
+- name: yarn-site
+  template: src=yarn-site.xml dest="{{ hadoop_home }}/etc/hadoop/yarn-site.xml" owner=root group=root
+
+- name: hdfs-site
+  template: src=hdfs-site.xml dest="{{ hadoop_home }}/etc/hadoop/hdfs-site.xml" owner=root group=root
+
+- name: core-site
+  template: src=core-site.xml dest="{{ hadoop_home }}/etc/hadoop/core-site.xml" owner=root group=root
+
+- name: slaves file on master node
+  template: src=slaves dest="{{ hadoop_home }}/etc/hadoop/slaves" owner=root group=root
