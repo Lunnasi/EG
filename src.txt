@@ -21,6 +21,32 @@ host_file:
 192.168.56.13 dn2 dn2.cluster2.com
 192.168.56.105 eghome eg.cluster2.com
 
+Property Files
+
+core-site.xml
+-------------------------------------------
+<property>
+  <name>fs.default.FS</name>
+  <value>hdfs://192.168.56.105:8020</value>
+</property>
+
+hdfs-site.xml
+--------------------------------------------
+<property>
+  <name>dfs.namenode.name.dir</name>
+  <value>file:</value>
+</property>
+
+<property>
+  <name>dfs.datanode.name.dir</name>
+  <value>file:</value>
+</property>
+
+mapred-site.xml
+----------------------------------------------
+<property>
+
+</property>
 
 
 

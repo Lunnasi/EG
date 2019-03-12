@@ -1,7 +1,7 @@
-[Name Node]
+[name_node]
 hadoop  ansible_host=192.168.56.11
 
-[Data Node]
+[data_node]
 nn1  ansible_host=192.168.56.12
 nn2  ansible_host=192.168.56.13
 

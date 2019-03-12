@@ -1,12 +1,17 @@
+---
 - name: Create dir
+  become: yes
+  become_user: vagrant
   file:
     path: ~/input
     state: directory
     mode: 0755
 
-- set_fact: f_path="/etc/hadoop/hadoop-3.1.2/etc/hadoop/"
+- set_fact: f_path="/home/vagrant/hadoop-3.1.2/etc/hadoop/"
  
 - name: find files
+  become: yes
+  become_user: vagrant
   find: 
    path: "{{f_path}}" 
    recurse: yes 
@@ -21,6 +26,7 @@
 
 - name: copy files
   become: yes
+  become_user: vagrant
   copy:
     src: "{{ item }}"
     dest: ~/input
