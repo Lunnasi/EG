@@ -1,3 +1,25 @@
+
+Multi-node cluster install
+
+Deploy server:
+EGHome  -  192.168.56.105
+
+Master Deamons will run on
+hadoop  -  192.168.56.11
+HDFS - Name node
+YARN - Resource Manager
+
+Slave Deamons will run on
+nn1  -  192.168.56.12
+nn2  -  192.168.56.13
+HDFS - Data node
+YARN - Node manager
+
+
+
+
+
+
 ssh-keygen -t rsa -C "sergey.shake@gmail.com"
 
 cd /vagrant/

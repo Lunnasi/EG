@@ -20,6 +20,7 @@
   when: file_to_copy > 0
 
 - name: copy files
+  become: yes
   copy:
     src: "{{ item }}"
     dest: ~/input

@@ -1,5 +1,9 @@
-[hadoop]
-hadoop1  ansible_host=192.168.56.11
+[Name Node]
+hadoop  ansible_host=192.168.56.11
+
+[Data Node]
+nn1  ansible_host=192.168.56.12
+nn2  ansible_host=192.168.56.13
 
 [click]
 clickhouse  ansible_host=192.168.56.12

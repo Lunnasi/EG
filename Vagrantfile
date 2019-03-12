@@ -3,6 +3,8 @@ Vagrant.configure("2") do |config|
   ui = Vagrant::UI::Colored.new
     machines = {    
 	:Hadoop => {:ip => '192.168.56.11', :mem => '2048', :cpu => 2},
+  :nn1 => {:ip => '192.168.56.12', :mem => '2048', :cpu => 1},
+  :nn2 => {:ip => '192.168.56.13', :mem => '2048', :cpu => 1},
 #  :ClickHouse => {:ip => '192.168.56.12', :mem => '1024', :cpu => 1},
   :EGHome => {:ip => '192.168.56.105', :mem => '1024', :cpu => 1},
   }
