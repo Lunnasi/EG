@@ -10,16 +10,16 @@
 
 - shell: java -version
 
-- set_fact: work_dir="/etc/hadoop"
+- set_fact: work_dir="/home/vagrant"
 - set_fact: file_name=hadoop-3.1.2
 - set_fact: full_name="{{work_dir}}/{{file_name}}"
 - stat: path="{{full_name}}.tar.gz"
   register: hadoop_tar
 
-- file:
-    path: "{{ work_dir }}"
-    state: directory
-    mode: 0755
+# - file:
+#     path: "{{ work_dir }}"
+#     state: directory
+#     mode: 0755
 
 - name: Step 2 — Installing Hadoop
   become: yes
@@ -27,6 +27,7 @@
     url: https://www-us.apache.org/dist/hadoop/common/hadoop-3.1.2/{{file_name}}.tar.gz
     dest: "{{ work_dir }}"
   register: result
+  mode: 0755
   until: result is success
   when: not hadoop_tar.stat.exists
 

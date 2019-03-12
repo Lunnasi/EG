@@ -1,3 +1,4 @@
+git clone https://github.com/Lunnasi/EG.git --branch EG/home_work
 
 Multi-node cluster install
 
