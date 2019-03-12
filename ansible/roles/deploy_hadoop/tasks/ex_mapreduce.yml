@@ -30,6 +30,7 @@
   copy:
     src: "{{ item }}"
     dest: ~/input
+    remote_src: yes
   with_items: "{{ all_files }}"
   when: file_to_copy > 0
 
