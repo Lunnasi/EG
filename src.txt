@@ -19,8 +19,8 @@ HDFS - Name node
 YARN - Resource Manager
 
 Slave Deamons will run on
-nn1  -  192.168.56.12
-nn2  -  192.168.56.13
+dn1  -  192.168.56.12
+dn2  -  192.168.56.13
 HDFS - Data node
 YARN - Node manager
 
@@ -59,8 +59,6 @@ mapred-site.xml
 
 
 
-ssh-keygen -t rsa -C "example@gmail.com"
-
 cd /vagrant/
 cp /home/vagrant/.ssh/id_rsa.pub .
 
@@ -73,4 +71,4 @@ lineinfile: dest="{{ hadoop_home }}/etc/hadoop/hadoop-env.sh" regexp=JAVA_HOME= 
 ls -s hadoop-3.1.2 hadoop
 
 ls -l core-site.xml hdfs-site.xml mapred-site.xml yarn-site.xml
-hdf dfs -ls
+hdfs dfs -ls

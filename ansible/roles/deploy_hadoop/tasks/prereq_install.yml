@@ -26,7 +26,6 @@
   get_url:
     url: https://www-us.apache.org/dist/hadoop/common/hadoop-3.1.2/{{file_name}}.tar.gz
     dest: "{{ work_dir }}"
-    owner: vagrant
   register: result
   until: result is success
   when: not hadoop_tar.stat.exists
@@ -37,8 +36,6 @@
     dest: "{{work_dir}}" 
     creates: "{{full_name}}"
     copy: no
-    owner: vagrant
-    group: vagrant
 
 - name: Step 3 — Configuring Hadoop's Java Home
   lineinfile: 
