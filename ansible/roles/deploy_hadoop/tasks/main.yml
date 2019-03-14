@@ -9,7 +9,8 @@
 - stat: path=/home/vagrant
   register: hadoop
 
-- include_tasks: prereq_install.yml
+- include_tasks: create_user.yml
+#- include_tasks: prereq_install.yml
 #  when: not hadoop.stat.exists
 
 #- include_tasks: ex_mapreduce.yml
