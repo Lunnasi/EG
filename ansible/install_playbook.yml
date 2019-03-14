@@ -1,6 +1,6 @@
 ---
 - name: install httpd
-  hosts: hadoop 
+  hosts:  all
   become: yes
 
   roles:

@@ -9,7 +9,56 @@
 - stat: path=/home/vagrant
   register: hadoop
 
-- include_tasks: prereq_install.yml
+- name: create group
+  group:
+    name: hadoop
+    state: present
+
+- name: create hduser
+  user:
+    name: hduser
+    state: present
+    createhome: yes
+    move_home: yes
+    home: /home/hduser
+    group: hadoop
+    groups: "sudo,adm,hadoop"
+
+- name: mark vagrant host
+  lineinfile:
+    dest: /etc/hosts
+    regexp: master
+    line: ""
+
+- name: hosts
+  lineinfile:
+    dest: /etc/hosts
+    line: "{{ hostvars[item].ansible_host }} {{ hostvars[item].inventory_hostname }} {{ hostvars[item].inventory_hostname_short }}"
+    state: present
+  with_items: "{{ groups.all }}"
+
+- include_tasks: ssh_keys.yml
+
+
+
+
+
+
+
+
+
+
+#- name: get ssh
+#  become: yes
+#  debug: ssh_key="{{lookup('file','/home/hduser/.ssh/id_rsa.pub')}}"
+
+#- name: authorized_keys
+#  lineinfile:
+#    dest: /home/hduser/.ssh/authorized_keys
+#    line: ssh_key
+#    state: present
+
+#- include_tasks: prereq_install.yml
 #  when: not hadoop.stat.exists
 
 #- include_tasks: ex_mapreduce.yml
