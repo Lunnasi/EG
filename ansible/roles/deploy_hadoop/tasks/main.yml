@@ -9,9 +9,6 @@
 - stat: path=/home/vagrant
   register: hadoop
 
-<<<<<<< HEAD
-- include_tasks: create_user.yml
-=======
 - name: create group
   group:
     name: hadoop
@@ -50,7 +47,6 @@
 
 
 
-
 #- name: get ssh
 #  become: yes
 #  debug: ssh_key="{{lookup('file','/home/hduser/.ssh/id_rsa.pub')}}"
@@ -61,7 +57,6 @@
 #    line: ssh_key
 #    state: present
 
->>>>>>> c8c2c164b37efb3371c2753120f7c739450b38ad
 #- include_tasks: prereq_install.yml
 #  when: not hadoop.stat.exists
 
