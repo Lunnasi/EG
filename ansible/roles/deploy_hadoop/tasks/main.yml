@@ -39,25 +39,7 @@
 
 - include_tasks: ssh_keys.yml
 
+- include_tasks: install.yml
 
-
-
-
-
-
-
-
-#- name: get ssh
-#  become: yes
-#  debug: ssh_key="{{lookup('file','/home/hduser/.ssh/id_rsa.pub')}}"
-
-#- name: authorized_keys
-#  lineinfile:
-#    dest: /home/hduser/.ssh/authorized_keys
-#    line: ssh_key
-#    state: present
-
-#- include_tasks: prereq_install.yml
 #  when: not hadoop.stat.exists
-
 #- include_tasks: ex_mapreduce.yml
