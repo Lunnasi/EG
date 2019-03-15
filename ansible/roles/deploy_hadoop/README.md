@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 Deploy Hadoop
+=======
+Deploy process
+>>>>>>> 0010041e6dae36f65ac21af64f38547c470d5a26
 =========
 
 Installation and Set Up a 3-Node Hadoop Cluster v.3.1.2 on Ubuntu v.16.04 with Ansible
@@ -13,7 +17,12 @@ Multi-node cluster install
 6. Check live nodes on Hadoop namenode UI
    hdfs dfsadmin report 
 
+<<<<<<< HEAD
 Infrastructure
+=======
+
+Role Variables
+>>>>>>> 0010041e6dae36f65ac21af64f38547c470d5a26
 --------------
 
 Infrastructure was provisioned by HashiCorp Vagrant. Please look into Vagrantfile for a details
