@@ -1,24 +1,76 @@
 # EG
+Deploy Hadoop
+=========
 
-__________________________________
-Theoretical part
+Installation and Set Up a 3-Node Hadoop Cluster v.3.1.2 on Ubuntu v.16.04 with Ansible
 
-Get as much knowledge as possible about modern state of Hadoop ecosystem during 2 week time period
+Multi-node cluster install
+------------
+1. Download and intall JAva and Hadoop on all the systems
+2. Specify the IP address of each system followed by their host names in host file of each system
+3. COnfigure hadoop configuration files (core-site,hdfs-site,mapred-site,yasrn-site)
+4. Edit slaves file on master node
+5. Format namenode and start all hadoop services
+6. Check live nodes on Hadoop namenode UI
+   hdfs dfsadmin report 
 
-Practical part 
+Infrastructure
+--------------
 
-Setup minimal Hadoop infrastructure on local VMs (VirtualBox or any other) using Ansible
+Infrastructure was provisioned by HashiCorp Vagrant. Please look into Vagrantfile for a details
 
-Setup ClickHouse on local VM using Ansible
+Deploy server:
+EGHome  -  192.168.56.105
 
-Create MR job (no restrictions on language/tooling) to transform CSV file with 3 fields, 1000000 rows from HDFS into ClickHouse table
+Master Deamons will run on
+master  -  192.168.56.11
+HDFS - Name node
+YARN - Resource Manager
 
- 
-Outcomes
+Slave Deamons will run on
+node1  -  192.168.56.12
+node2  -  192.168.56.13
+HDFS - Data node
+YARN - Node manager
 
-Ansible code (in form of Git repository snapshot) to setup Hadoop and Clickhouse
-Sources (in form of Git repository snapshot) to compile/submit MR job
-Ability to demonstrate understanding of Hadoop ecosystem
 
-__________________________________
-Deadline for submitting practical part: 21.03.2019. In case you have any questions feel free to contact XXXXXX
+Host File
+------------
+host_file:
+192.168.56.11 master master
+192.168.56.12 node1 node1
+192.168.56.13 node2 node2
+192.168.56.14 clickhouse clickhouse
+192.168.56.105 eghome eghome
+
+Property Files
+----------------
+
+
+role/deploy_hadoop/tasks
+----------------
+main.yml
+  include_tasks:
+    config.yml
+      property files + env variables
+    infrastructure.yml
+      create folders user permitions
+    install.yml
+      install prerequesites, download hadoop instalation && unarchve it.
+    ssh_keys.yml
+      SSH Key Exchange between multiple hosts
+
+Example Playbook
+----------------
+
+ansible-playbook install-playbook.yml
+
+License
+-------
+
+BSD
+
+Author Information
+------------------
+
+This role was created as a part of "Evolution Games" Interview home works subtask.

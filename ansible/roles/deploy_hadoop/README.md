@@ -1,31 +1,68 @@
-Role Name
+Deploy Hadoop
 =========
 
-A brief description of the role goes here.
+Installation and Set Up a 3-Node Hadoop Cluster v.3.1.2 on Ubuntu v.16.04 with Ansible
 
-Requirements
+Multi-node cluster install
 ------------
+1. Download and intall JAva and Hadoop on all the systems
+2. Specify the IP address of each system followed by their host names in host file of each system
+3. COnfigure hadoop configuration files (core-site,hdfs-site,mapred-site,yasrn-site)
+4. Edit slaves file on master node
+5. Format namenode and start all hadoop services
+6. Check live nodes on Hadoop namenode UI
+   hdfs dfsadmin report 
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
-
-Role Variables
+Infrastructure
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Infrastructure was provisioned by HashiCorp Vagrant. Please look into Vagrantfile for a details
 
-Dependencies
+Deploy server:
+EGHome  -  192.168.56.105
+
+Master Deamons will run on
+master  -  192.168.56.11
+HDFS - Name node
+YARN - Resource Manager
+
+Slave Deamons will run on
+node1  -  192.168.56.12
+node2  -  192.168.56.13
+HDFS - Data node
+YARN - Node manager
+
+
+Host File
 ------------
+host_file:
+192.168.56.11 master master
+192.168.56.12 node1 node1
+192.168.56.13 node2 node2
+192.168.56.14 clickhouse clickhouse
+192.168.56.105 eghome eghome
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+Property Files
+----------------
+
+
+role/deploy_hadoop/tasks
+----------------
+main.yml
+  include_tasks:
+    config.yml
+      property files + env variables
+    infrastructure.yml
+      create folders user permitions
+    install.yml
+      install prerequesites, download hadoop instalation && unarchve it.
+    ssh_keys.yml
+      SSH Key Exchange between multiple hosts
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+ansible-playbook install-playbook.yml
 
 License
 -------
@@ -35,4 +72,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+This role was created as a part of "Evolution Games" Interview home works subtask.

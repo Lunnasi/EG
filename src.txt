@@ -14,61 +14,44 @@ Deploy server:
 EGHome  -  192.168.56.105
 
 Master Deamons will run on
-hadoop  -  192.168.56.11
+master  -  192.168.56.11
 HDFS - Name node
 YARN - Resource Manager
 
 Slave Deamons will run on
-dn1  -  192.168.56.12
-dn2  -  192.168.56.13
+node1  -  192.168.56.12
+node2  -  192.168.56.13
 HDFS - Data node
 YARN - Node manager
 
 host_file:
-192.168.56.11 hadoop hadoop.cluster2.com
-192.168.56.12 dn1 dn1.cluster2.com
-192.168.56.13 dn2 dn2.cluster2.com
-192.168.56.105 eghome eg.cluster2.com
-
-Property Files
-
-core-site.xml
--------------------------------------------
-<property>
-  <name>fs.default.FS</name>
-  <value>hdfs://192.168.56.105:8020</value>
-</property>
-
-hdfs-site.xml
---------------------------------------------
-<property>
-  <name>dfs.namenode.name.dir</name>
-  <value>file:</value>
-</property>
-
-<property>
-  <name>dfs.datanode.name.dir</name>
-  <value>file:</value>
-</property>
-
-mapred-site.xml
-----------------------------------------------
-<property>
-
-</property>
+192.168.56.11 master master
+192.168.56.12 node1 node1
+192.168.56.13 node2 node2
+192.168.56.14 clickhouse clickhouse
+192.168.56.105 eghome eghome
 
 
+__________________________________
+Theoretical part
 
-cd /vagrant/
-cp /home/vagrant/.ssh/id_rsa.pub .
+Get as much knowledge as possible about modern state of Hadoop ecosystem during 2 week time period
 
+Practical part 
 
-readlink -f /usr/bin/java | sed "s:bin/java::"
+Setup minimal Hadoop infrastructure on local VMs (VirtualBox or any other) using Ansible
 
-lineinfile: dest="{{ hadoop_home }}/etc/hadoop/hadoop-env.sh" regexp=JAVA_HOME= line="export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64"
+Setup ClickHouse on local VM using Ansible
 
-/usr/local/hadoop/bin/hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.3.jar grep ~/input ~/grep_example 'principal[.]*'
-ls -s hadoop-3.1.2 hadoop
+Create MR job (no restrictions on language/tooling) to transform CSV file with 3 fields, 1000000 rows from HDFS into ClickHouse table
 
-ls -l core-site.xml hdfs-site.xml mapred-site.xml yarn-site.xml
-hdfs dfs -ls
+ 
+Outcomes
+
+Ansible code (in form of Git repository snapshot) to setup Hadoop and Clickhouse
+Sources (in form of Git repository snapshot) to compile/submit MR job
+Ability to demonstrate understanding of Hadoop ecosystem
+
+__________________________________
+Deadline for submitting practical part: 21.03.2019. In case you have any questions feel free to contact XXXXXX
+
