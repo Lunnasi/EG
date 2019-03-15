@@ -1,19 +1,9 @@
 ---
-# tasks file for deploy_hadoop
-- name: apt upgrade
-  apt:
-    upgrade: dist
-    update_cache: yes
-    cache_valid_time: 86400
-
-#- stat: path=/home/vagrant
-#  register: hadoop
-
 - include_tasks: infrastructure.yml
 
 - include_tasks: ssh_keys.yml
 
-#- include_tasks: install.yml
+- include_tasks: install.yml
 
 #  when: not hadoop.stat.exists
 #- include_tasks: ex_mapreduce.yml

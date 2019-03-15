@@ -1,5 +1,11 @@
 ---
-- name: Step 1 — Installing Prerequisites
+- name: apt upgrade
+  apt:
+    upgrade: dist
+    update_cache: yes
+    cache_valid_time: 86400
+
+- name: Installing Prerequisites 
   apt: name={{item}} state=installed
   with_items:
     - 'wget'
@@ -8,20 +14,15 @@
     - 'unzip'
     - 'default-jdk'
 
-- shell: java -version
-
-- set_fact: work_dir="/home/vagrant"
+- set_fact: work_dir="/home/hduser"
 - set_fact: file_name=hadoop-3.1.2
 - set_fact: full_name="{{work_dir}}/{{file_name}}"
+
+#check if tar already exists
 - stat: path="{{full_name}}.tar.gz"
   register: hadoop_tar
 
-# - file:
-#     path: "{{ work_dir }}"
-#     state: directory
-#     mode: 0755
-
-- name: Step 2 — Installing Hadoop
+- name: Installing Hadoop
   become: yes
   get_url:
     url: https://www-us.apache.org/dist/hadoop/common/hadoop-3.1.2/{{file_name}}.tar.gz
@@ -36,14 +37,3 @@
     dest: "{{work_dir}}" 
     creates: "{{full_name}}"
     copy: no
-
-- name: Step 3 — Configuring Hadoop's Java Home
-  lineinfile: 
-    path: "{{ full_name }}/etc/hadoop/hadoop-env.sh"
-    state: present
-    regexp: JAVA_HOME= 
-    line: "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64"
-
-- name: Step 4 — Running Hadoop
-  shell: "{{ full_name  }}/bin/hadoop version"
-
