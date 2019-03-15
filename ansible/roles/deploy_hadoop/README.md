@@ -1,12 +1,11 @@
-Role Name
+Deploy process
 =========
 
-A brief description of the role goes here.
+Installation and Set Up a 3-Node Hadoop Cluster v.3.1.2 on Ubuntu v.16.04 with Ansible
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
 
 Role Variables
 --------------
