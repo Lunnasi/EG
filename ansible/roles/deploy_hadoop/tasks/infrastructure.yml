@@ -1,0 +1,38 @@
+---
+- name: create group
+  group:
+    name: hadoop
+    state: present
+
+- name: create hduser
+  user:
+    name: hduser
+    state: present
+    createhome: yes
+    move_home: yes
+    home: /home/hduser
+    group: hadoop
+    groups: "sudo,adm,hadoop"
+
+- name: mark vagrant host
+  lineinfile:
+    dest: /etc/hosts
+    regexp: master
+    line: ""
+
+- name: hosts
+  lineinfile:
+    dest: /etc/hosts
+    line: "{{ hostvars[item].ansible_host }} {{ hostvars[item].inventory_hostname }} {{ hostvars[item].inventory_hostname_short }}"
+    state: present
+  with_items: "{{ groups.all }}"
+
+- name: create folders
+  file:
+    path: "{{item}}"
+    state: directory
+    mode: 0755
+    group: hadoop
+    owner: hduser
+  with_items:
+  - ["/usr/local/hadoop","/app/hadoop/tmp","/usr/local/hadoop_store/hdfs/namenode","/usr/local/hadoop_store/hdfs/datanode"]

@@ -6,40 +6,14 @@
     update_cache: yes
     cache_valid_time: 86400
 
-- stat: path=/home/vagrant
-  register: hadoop
+#- stat: path=/home/vagrant
+#  register: hadoop
 
-- name: create group
-  group:
-    name: hadoop
-    state: present
-
-- name: create hduser
-  user:
-    name: hduser
-    state: present
-    createhome: yes
-    move_home: yes
-    home: /home/hduser
-    group: hadoop
-    groups: "sudo,adm,hadoop"
-
-- name: mark vagrant host
-  lineinfile:
-    dest: /etc/hosts
-    regexp: master
-    line: ""
-
-- name: hosts
-  lineinfile:
-    dest: /etc/hosts
-    line: "{{ hostvars[item].ansible_host }} {{ hostvars[item].inventory_hostname }} {{ hostvars[item].inventory_hostname_short }}"
-    state: present
-  with_items: "{{ groups.all }}"
+- include_tasks: infrastructure.yml
 
 - include_tasks: ssh_keys.yml
 
-- include_tasks: install.yml
+#- include_tasks: install.yml
 
 #  when: not hadoop.stat.exists
 #- include_tasks: ex_mapreduce.yml
