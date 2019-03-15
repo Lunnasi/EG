@@ -5,5 +5,7 @@
 
 - include_tasks: install.yml
 
+- include_tasks: config.yml
+
 #  when: not hadoop.stat.exists
 #- include_tasks: ex_mapreduce.yml

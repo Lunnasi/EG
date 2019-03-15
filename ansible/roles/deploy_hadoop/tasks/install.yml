@@ -34,6 +34,23 @@
 - name: Unzip
   unarchive: 
     src: "{{full_name}}.tar.gz"
-    dest: "{{work_dir}}" 
+    dest: "{{ work_dir }}" 
     creates: "{{full_name}}"
     copy: no
+
+- name: mv to /usr/local/hadoop
+  synchronize:
+    src: "{{full_name}}"
+    dest: /usr/local/hadoop
+  delegate_to: "{{ inventory_hostname }}"
+
+#  copy:
+#    src: "{{full_name}}"
+#    dest: /usr/local/hadoop
+#    remote_src: yes
+#    directory_mode: yes
+
+- name: remove ald folder
+  file:
+    path: "{{full_name}}"
+    state: absent

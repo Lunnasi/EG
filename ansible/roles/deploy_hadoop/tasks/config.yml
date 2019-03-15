@@ -1,12 +1,46 @@
 ---
+- set_fact: hadoop_home="/usr/local/hadoop"
+- set_fact: owner="hduser"
+- set_fact: group="hadoop"
+
 - name: yarn-site
-  template: src=yarn-site.xml dest="{{ hadoop_home }}/etc/hadoop/yarn-site.xml" owner=root group=root
+  template: src=yarn-site.xml dest="{{ hadoop_home }}/etc/hadoop/yarn-site.xml" owner="{{owner}}" group="{{group}}"
 
 - name: hdfs-site
-  template: src=hdfs-site.xml dest="{{ hadoop_home }}/etc/hadoop/hdfs-site.xml" owner=root group=root
+  template: src=hdfs-site.xml dest="{{ hadoop_home }}/etc/hadoop/yarn-site.xml" owner="{{owner}}" group="{{group}}"
 
 - name: core-site
-  template: src=core-site.xml dest="{{ hadoop_home }}/etc/hadoop/core-site.xml" owner=root group=root
+  template: src=core-site.xml dest="{{ hadoop_home }}/etc/hadoop/yarn-site.xml" owner="{{owner}}" group="{{group}}"
 
-- name: slaves file on master node
-  template: src=slaves dest="{{ hadoop_home }}/etc/hadoop/slaves" owner=root group=root
+- name: master node
+    copy:
+      dest: "/usr/local/hadoop/etc/hadoop/masters" 
+      content: 'master'
+    when: "{{ansible_hostname == master}}"
+
+- name: adding slaves
+    copy:
+      dest: "{{hadoop_home}}}/etc/hadoop/slaves"
+      content: 'node1'
+
+- name: Format namenode data dir
+
+# Edding env variables
+- name: .bashrc
+   lineinfile: dest="/home/hduser/.bashrc" line="{{item}}" state=present
+   with_items:
+    - #HADOOP VARIABLES START
+    - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+    - export HADOOP_HOME=/usr/local/hadoop
+    - export PATH=$PATH:$HADOOP_HOME/bin
+    - export PATH=$PATH:$HADOOP_HOME/sbin
+    - export HADOOP_MAPRED_HOME=$HADOOP_HOME
+    - export HADOOP_COMMON_HOME=$HADOOP_HOME
+    - export HADOOP_HDFS_HOME=$HADOOP_HOME
+    - export YARN_HOME=$HADOOP_HOME
+    - export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+    - export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib"
+    - #HADOOP VARIABLES END  
+  
+- name: Seting JAVA_HOME
+    lineinfile: dest="{{ hadoop_home }}/etc/hadoop/hadoop-env.sh" regexp=JAVA_HOME= line="export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64"
