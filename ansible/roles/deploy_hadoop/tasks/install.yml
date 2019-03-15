@@ -39,18 +39,10 @@
     copy: no
 
 - name: mv to /usr/local/hadoop
+#  shell: mv /home/hduser/hadoop-3.1.2/* /usr/local/hadoop
   synchronize:
-    src: "{{full_name}}"
+    src: "{{full_name}}/"
     dest: /usr/local/hadoop
+    delete: yes
+    recursive: yes
   delegate_to: "{{ inventory_hostname }}"
-
-#  copy:
-#    src: "{{full_name}}"
-#    dest: /usr/local/hadoop
-#    remote_src: yes
-#    directory_mode: yes
-
-- name: remove ald folder
-  file:
-    path: "{{full_name}}"
-    state: absent

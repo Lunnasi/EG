@@ -5,12 +5,12 @@
     state: present
 
 - name: create hduser
+  become: yes
   user:
     name: hduser
     state: present
-    createhome: yes
-    move_home: yes
     home: /home/hduser
+    move_home: yes
     group: hadoop
     groups: "sudo,adm,hadoop"
 

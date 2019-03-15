@@ -1,0 +1,39 @@
+---
+- name: check JAVA
+  command: "java -version"
+  register: results
+
+- debug:
+    var: results.stderr_lines
+
+- name: check Hadoop
+  become: yes
+  become_user: hduser
+  command: /usr/local/hadoop/bin/hadoop version
+  register: results
+
+- debug: 
+    var: results.stdout
+
+- name: format namenode data dir
+  become: yes
+  become_user: hduser
+  command: /usr/local/hadoop/bin/hdfs namenode -format -force
+  when: "{{ item == ansible_hostname }}"
+  with_items:
+     - "{{ groups['name_node'] }}"
+
+- name: start hdfs
+  become: yes
+  become_user: hduser
+  shell:  "{{item}}"
+  with_items:
+  - [". /home/hduser/hadoop_env.sh","/usr/local/hadoop/sbin/start-dfs.sh","jps"]
+
+- name: check hadoop status
+  become: yes
+  become_user: hduser
+  command: /usr/local/hadoop/bin/hdfs dfsadmin -report
+  when: "{{ item == ansible_hostname }}"
+  with_items:
+     - "{{ groups['name_node'] }}"
