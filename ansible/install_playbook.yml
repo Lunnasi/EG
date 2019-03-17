@@ -1,6 +1,6 @@
 ---
 - name: install httpd
-  hosts:  all
+  hosts:  click
   become: yes
 
   roles:

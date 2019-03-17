@@ -1,0 +1,39 @@
+---
+- name: create group
+  group:
+    name: "{{group}}"
+    state: present
+
+- name: create hduser
+  become: yes
+  user:
+    name: "{{owner}}"
+    state: present
+    home: "/home/{{owner}}"
+    move_home: yes
+    group: "{{group}}"
+    groups: "sudo,adm,hadoop"
+
+- name: mark vagrant host
+  lineinfile:
+    dest: /etc/hosts
+    regexp: master
+    line: ""
+
+- name: hosts
+  lineinfile:
+    dest: /etc/hosts
+    line: "{{ hostvars[item].ansible_host }} {{ hostvars[item].inventory_hostname }} {{ hostvars[item].inventory_hostname_short }}"
+    state: present
+  with_items: "{{ groups.all }}"
+
+- name: create folders
+  file:
+    path: "{{item}}"
+    state: directory
+    mode: 0755
+    group: "{{group}}"
+    owner: "{{owner}}"
+  with_items:
+  - ["/usr/local/clickhouse","/app/clickhouse/tmp"]
+

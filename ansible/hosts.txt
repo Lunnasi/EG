@@ -6,4 +6,6 @@ node1  ansible_host=192.168.56.12
 #node2  ansible_host=192.168.56.13
 
 [click]
-#clickhouse  ansible_host=192.168.56.12
+clickhouse  ansible_host=192.168.56.14
+
+
