@@ -1,0 +1,25 @@
+---
+- name: check if current CPU has support for SSE 4.2
+  shell: grep -q sse4_2 /proc/cpuinfo && echo "SSE 4.2 supported" || echo "SSE 4.2 not supported"
+
+- name: add the Yandex repository
+  lineinffile: dest="/etc/apt/sources.list" line="deb http://repo.yandex.ru/clickhouse/deb/stable/ main/" state=present
+
+- name: apt upgrade
+  apt:
+    upgrade: dist
+    update_cache: yes
+    cache_valid_time: 86400
+
+- name: Add an apt key by id from a keyserver
+  apt_key: keyserver.ubuntu.com
+  id: E0C56BD4
+
+- name: Installing Prerequisites 
+  become: yes
+  become_user: "{{owner}}"
+  apt: name={{item}} state=installed
+  with_items:
+    - 'dirmngr'
+    - 'clickhouse-client'
+    - 'clickhouse-server'

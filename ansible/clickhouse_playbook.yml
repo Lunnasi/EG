@@ -3,5 +3,5 @@
   hosts: click 
   become: yes
 
--  roles:
+  roles:
     - { role: clickhouse, when: ansible_system== 'Linux'}
