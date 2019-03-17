@@ -1,0 +1,4 @@
+---
+- name: install clickhouse
+  hosts: click
+  
