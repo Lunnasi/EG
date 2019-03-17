@@ -1,10 +1,10 @@
 ---
-- name: create group
+- name: create group "{{group}}"
   group:
     name: "{{group}}"
     state: present
 
-- name: create hduser
+- name: create "{{owner}}"
   become: yes
   user:
     name: "{{owner}}"
@@ -12,7 +12,7 @@
     home: "/home/{{owner}}"
     move_home: yes
     group: "{{group}}"
-    groups: "sudo,adm,hadoop"
+    groups: "sudo,adm,{{group}}"
 
 - name: mark vagrant host
   lineinfile:

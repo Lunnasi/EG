@@ -1,3 +1,4 @@
 ---
 # tasks file for clickhouse
 - include_tasks: infrastructure.yml
+- include_tasks: install.yml

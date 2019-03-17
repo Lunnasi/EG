@@ -1,3 +1,6 @@
 ---
 ansible_user                 : vagrant
 ansible_ssh_private_key_file : /home/vagrant/.shh/click_id_rsa.pub
+click_home                   : /usr/local/clickhouse
+owner                        : click_home
+group                        : clickhouse
