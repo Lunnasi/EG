@@ -4,10 +4,10 @@ import csv
 
 count = 100
 
-csv.register_dialect('myDialect',
-delimiter = ';',
-quoting=csv.QUOTE_NONE,
-skipinitialspace=True)
+# csv.register_dialect('myDialect',
+# delimiter = ';',
+# quoting=csv.QUOTE_NONE,
+# skipinitialspace=True)
 
 def count_rows(n):
   while n != 0:
@@ -20,6 +20,7 @@ for x in range(count):
     b = x / (count*0.01)
     print(str(b) + " %" + " is done")
   with open('person_'+ str(b) +'.csv', 'a+') as f:
-    writer = csv.writer(f, dialect='myDialect', lineterminator ='\r')
+#    writer = csv.writer(f, dialect='myDialect', lineterminator ='\r')
+    writer = csv.writer(f)
     writer.writerow(next(row))
   f.close()
