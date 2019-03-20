@@ -1,0 +1,29 @@
+---
+- name: Test Connection
+  hosts: master
+  become: yes
+
+  tasks: 
+  - name: hadoop mkdir
+    become: yes
+    become_user: hduser
+    shell: /usr/local/hadoop/bin/hdfs dfs -mkdir -p /user/hduser/mr_tst
+  
+  - name: hdfs dfs -put
+    become: yes
+    become_user: yes
+    shell: /usr/local/hadoop/bin/hdfs dfs -put /home/hduser/EG/generated_values/ mr_tst
+
+  - name: MR job
+    become: yes
+    become_user: yes
+    shell: /usr/local/hadoop/hadoop jar /usr/local/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.1.2.jar -D mapred.reduce.tasks=0 -input mr_tst/generated_values -output mr_tst/output -mapper mapper.py -file mapper.py
+
+- name: Check result
+  hosts: clickhouse
+  become: yes
+  become_user: vagrant
+
+  tasks:
+  - name: count of inserted rows
+    shell: clickhouse-client -d mr_db -q 'select count(*) from task3'
