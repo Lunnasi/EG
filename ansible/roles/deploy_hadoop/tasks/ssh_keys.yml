@@ -30,7 +30,7 @@
   shell: ssh -o StrictHostKeyChecking=no "{{item}}" 'uname -a'
 #  when: "{{ item != ansible_hostname }}"
   with_items:
-    - "{{ groups['all'] }}"
+    - "{{ groups['hadoop'] }}"
   register: results
 
 - debug: 

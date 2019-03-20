@@ -3,7 +3,12 @@
   hosts: master
   become: yes
 
-  tasks: 
+  tasks:
+  - name: git clone
+    shell: '{{item}}'
+    with_items:
+    - ['git clone https://github.com/Lunnasi/EG.git --branch EG/home_work','mv /home/vagrant/EG /home/hduser/', 'chown -R hduser:hadoop /home/hduser/EG']
+ 
   - name: hadoop mkdir
     become: yes
     become_user: hduser
