@@ -9,7 +9,8 @@ How To
 5. ansible all -m ping (check if all vm is available)
 6. ansible-playbook install_playbook.yml (install all hadoop env and configure)
 7. ansible-playbook clickhouse_playbook.yml (instal clickhouse)
-8. ansible-playbook task3_playbook.yml
+8. ansible-playbook task3_playbook.yml ()
+   -  clickhouse-client -d mr_db -q 'select count(*) from task3' (to check status (run from clickhouse vm))
 
 Multi-node cluster install
 ------------

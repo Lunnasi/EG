@@ -22,7 +22,7 @@
     key: "{{ lookup('file','buffer/{{item}}-id_rsa.pub')}}"
 #  when: "{{ item != ansible_hostname }}"
   with_items: 
-    - "{{ groups['all'] }}"
+    - "{{ groups['hadoop'] }}"
 
 - name: check ssh
   become: yes
