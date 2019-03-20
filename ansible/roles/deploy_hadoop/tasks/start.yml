@@ -28,7 +28,7 @@
   become_user: hduser
   shell:  "{{item}}"
   with_items:
-  - [". /home/hduser/hadoop_env.sh","/usr/local/hadoop/sbin/start-dfs.sh","jps"]
+  - [". /home/hduser/hadoop_env.sh","/usr/local/hadoop/sbin/start-all.sh","jps"]
 
 - name: check hadoop status
   become: yes
@@ -37,3 +37,7 @@
   when: "{{ item == ansible_hostname }}"
   with_items:
      - "{{ groups['name_node'] }}"
+  register: results
+
+- debug:
+    var: results
