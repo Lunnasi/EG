@@ -9,6 +9,7 @@ How To
 5. cd ansible/
 6. ansible all -m ping (check if all vm is available)
 7. ansible-playbook install_playbook.yml (install all hadoop env and configure)
+   -  http://192.168.56.11:9870/dfshealth.html#tab-overview
 8. ansible-playbook clickhouse_playbook.yml (install clickhouse)
 9. ansible-playbook task3_playbook.yml ()
    -  clickhouse-client -d mr_db -q 'select count(*) from task3' (to check status (run from clickhouse vm))
