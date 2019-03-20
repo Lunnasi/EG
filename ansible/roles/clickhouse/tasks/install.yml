@@ -23,3 +23,7 @@
     - 'dirmngr'
     - 'clickhouse-client'
     - 'clickhouse-server'
+
+- name: Connect ClickHouse via clickhouse-client
+  become: yes
+  lineinfile: dest="/etc/clickhouse-server/config.xml" regexp=listen_host= line="<listen_host>::</listen_host>"
