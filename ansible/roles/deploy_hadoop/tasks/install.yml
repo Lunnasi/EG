@@ -8,11 +8,15 @@
 - name: Installing Prerequisites 
   apt: name={{item}} state=installed
   with_items:
+    - 'python3-pip'
     - 'wget'
     - 'tar'
     - 'gzip'
     - 'unzip'
     - 'default-jdk'
+
+- name: pip3
+  shell: sudo pip3 install clickhouse-driver[lz4]
 
 - set_fact: work_dir="/home/hduser"
 - set_fact: file_name=hadoop-3.1.2
