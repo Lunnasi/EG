@@ -11,13 +11,21 @@
   
   - name: hdfs dfs -put
     become: yes
-    become_user: yes
+    become_user: hduser
     shell: /usr/local/hadoop/bin/hdfs dfs -put /home/hduser/EG/generated_values/ mr_tst
 
+  - name: cp mapper file
+    copy:
+      dest: /home/vagrant/
+      src: /home/hduser/EG/mapper.py
+      owner: hduser
+      group: hadoop
+      mode: 0644
+      remote_src: yes
+    
   - name: MR job
-    become: yes
-    become_user: yes
-    shell: /usr/local/hadoop/hadoop jar /usr/local/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.1.2.jar -D mapred.reduce.tasks=0 -input mr_tst/generated_values -output mr_tst/output -mapper mapper.py -file mapper.py
+    become_user: hduser
+    shell: /usr/local/hadoop/bin/hadoop jar /usr/local/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.1.2.jar -D mapred.reduce.tasks=0 -input mr_tst/generated_values -output mr_tst/output -mapper mapper.py -file mapper.py 
 
 - name: Check result
   hosts: clickhouse
@@ -27,3 +35,7 @@
   tasks:
   - name: count of inserted rows
     shell: clickhouse-client -d mr_db -q 'select count(*) from task3'
+    register: results
+
+  - debug:
+      var: results
