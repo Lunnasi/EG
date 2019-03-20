@@ -5,11 +5,12 @@ How To
 1. After Vagrant setup all enviroment log into EGHome as user:vagrant pswd:vagrant
 2. git clone https://github.com/Lunnasi/EG.git --branch EG/home_work
 3. cd EG/
-4. source source.sh (istall all prerequisites)
-5. ansible all -m ping (check if all vm is available)
-6. ansible-playbook install_playbook.yml (install all hadoop env and configure)
-7. ansible-playbook clickhouse_playbook.yml (instal clickhouse)
-8. ansible-playbook task3_playbook.yml ()
+4. source source.sh (install all prerequisites)
+5. cd ansible/
+6. ansible all -m ping (check if all vm is available)
+7. ansible-playbook install_playbook.yml (install all hadoop env and configure)
+8. ansible-playbook clickhouse_playbook.yml (install clickhouse)
+9. ansible-playbook task3_playbook.yml ()
    -  clickhouse-client -d mr_db -q 'select count(*) from task3' (to check status (run from clickhouse vm))
 
 Multi-node cluster install
