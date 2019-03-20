@@ -5,7 +5,7 @@ How To
 1. After Vagrant setup all enviroment log into EGHome as user:vagrant pswd:vagrant
 2. git clone https://github.com/Lunnasi/EG.git --branch EG/home_work
 3. cd EG/
-4. source suorce.sh (istall all prerequisites)
+4. source source.sh (istall all prerequisites)
 5. ansible all -m ping (check if all vm is available)
 6. ansible-playbook install_playbook.yml (install all hadoop env and configure)
 7. ansible-playbook clickhouse_playbook.yml (instal clickhouse)
