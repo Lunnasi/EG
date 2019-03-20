@@ -3,7 +3,8 @@
   shell: grep -q sse4_2 /proc/cpuinfo && echo "SSE 4.2 supported" || echo "SSE 4.2 not supported"
 
 - name: add the Yandex repository
-  lineinffile: dest="/etc/apt/sources.list" line="deb http://repo.yandex.ru/clickhouse/deb/stable/ main/" state=present
+  become: yes
+  lineinfile: dest="/etc/apt/sources.list" line="deb http://repo.yandex.ru/clickhouse/deb/stable/ main/" state=present
 
 - name: apt upgrade
   apt:
@@ -12,13 +13,11 @@
     cache_valid_time: 86400
 
 - name: Add an apt key by id from a keyserver
-  apt_key: keyserver.ubuntu.com
-  id: E0C56BD4
+  shell: sudo apt-key adv --keyserver keyserver.ubuntu.com --recv E0C56BD4
 
 - name: Installing Prerequisites 
   become: yes
-  become_user: "{{owner}}"
-  apt: name={{item}} state=installed
+  apt: name={{item}} state=installed allow_unauthenticated=yes
   with_items:
     - 'dirmngr'
     - 'clickhouse-client'
@@ -26,4 +25,13 @@
 
 - name: Connect ClickHouse via clickhouse-client
   become: yes
-  lineinfile: dest="/etc/clickhouse-server/config.xml" regexp=listen_host= line="<listen_host>::</listen_host>"
+  lineinfile:
+    dest: "/etc/clickhouse-server/config.xml" 
+    regexp: '    <!-- <listen_host>' 
+    line: "    <listen_host>::</listen_host>"
+
+- name: Start Click
+  shell: sudo service clickhouse-server start
+
+- name: chk conn
+  shell: clickhouse-client -h '192.168.56.14' -q 'select 1'
