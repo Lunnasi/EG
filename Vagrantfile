@@ -1,12 +1,13 @@
 DEFAULT_BASE_BOX = "bento/ubuntu-16.04"
+#DEFAULT_BASE_BOX = "centos/7"
 Vagrant.configure("2") do |config|
   ui = Vagrant::UI::Colored.new
     machines = {    
-	:master => {:ip => '192.168.56.11', :mem => '2048', :cpu => 1},
+#	:master => {:ip => '192.168.56.11', :mem => '2048', :cpu => 1},
   :node1 => {:ip => '192.168.56.12', :mem => '2048', :cpu => 1},
 #  :node2 => {:ip => '192.168.56.13', :mem => '2048', :cpu => 1},
-  :clickhouse => {:ip => '192.168.56.14', :mem => '1024', :cpu => 1},
-  :EGHome => {:ip => '192.168.56.105', :mem => '1024', :cpu => 1},
+#  :clickhouse => {:ip => '192.168.56.14', :mem => '1024', :cpu => 1},
+#  :EGHome => {:ip => '192.168.56.105', :mem => '2048', :cpu => 2},
   }
   config.vm.box = DEFAULT_BASE_BOX
 
